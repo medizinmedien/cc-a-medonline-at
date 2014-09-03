@@ -12,10 +12,10 @@ defined( 'ABSPATH' ) || exit();
  * Correct WP Filebase Pro's setup option when SSL pages are requested.
  */
 function amed_return_https( $wp_filebase_pro_css_file_url ) {
-	if (is_ssl() )
-		return str_replace( 'http://', 'https://', $wp_filebase_pro_css_file_url );
-	else
-		return $wp_filebase_pro_css_file_url;
+        if (is_ssl() )
+                return str_replace( 'http://', 'https://', $wp_filebase_pro_css_file_url );
+        else
+                return $wp_filebase_pro_css_file_url;
 }
 add_filter( 'pre_option_wpfb_css', 'amed_return_https' );
 
