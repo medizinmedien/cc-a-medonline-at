@@ -3,7 +3,7 @@
  * Plugin Name: Custom Code for a.medonline.at
  * Description: Site-specific functionality for a.medonline.at like returning https links of wp-filebase-pro's CSS on https sites and redirecting page "/pneumo/" to https.
  * Author: Frank St&uuml;rzebecher
- * Version: 0.3
+ * Version: 0.4
  * GitHub Plugin URI: https://github.com/medizinmedien/cc-a-medonline-at
  */
 
@@ -107,4 +107,41 @@ function wp_safe_redirect($location, $status = 302) {
 	wp_redirect($location, $status);
 }
 }
+
+
+/**
+* Load Fullstory from Shared Includes.
+*/
+function cc_amed_load_fullstory() {
+
+	$fullstory_file = WP_PLUGIN_DIR . '/Shared-Includes/inc/track/fullstory-tracking.php';
+
+	if( file_exists( $fullstory_file ) )
+		include( $fullstory_file );
+
+}
+add_action( 'wp_footer',    'cc_amed_load_fullstory' );
+add_action( 'login_footer', 'cc_amed_load_fullstory' );
+
+/**
+* Embed Groove code into page footers to avoid anonymous support requests.
+*/
+function cc_amed_add_groove() {
+
+	// No include on special pages.
+	if(( defined( 'DOING_CRON' ) && DOING_CRON )
+	|| ( defined( 'XMLRPC_REQUEST') && XMLRPC_REQUEST )
+	|| ( defined( 'DOING_AUTOSAVE') && DOING_AUTOSAVE )
+	|| ( defined( 'DOING_AJAX' ) && DOING_AJAX)
+	|| is_page( array('impressum', 'kontakt') ))
+		return;
+
+	$groove_include = WP_PLUGIN_DIR . '/Shared-Includes/inc/groove/groove-help-widget.php';
+
+	if( file_exists( $groove_include ) )
+		include( $groove_include );
+
+}
+add_action( 'wp_footer',  'cc_amed_add_groove' );
+add_action( 'login_head', 'cc_amed_add_groove' );
 

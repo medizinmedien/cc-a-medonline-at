@@ -1,5 +1,9 @@
 ### Änderungen für CC (Custom Code): a.medonline.at
 
+#### Version 0.4 // 11.09.2014
+
+* Einbetten von Fullstory & Groove.
+
 #### Version 0.3 // 03.09.2012
 
 * Make the "Post Password Logout Button" appear in German.
