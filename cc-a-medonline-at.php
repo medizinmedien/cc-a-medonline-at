@@ -80,6 +80,7 @@ add_filter( 'the_password_form', 'amed_secure_postpass_form');
  * Provide pluggable WP function to renew the post password cookie
  * and add security attributes to it.
  */
+if ( !function_exists( 'wp_safe_redirect' ) ) {
 function wp_safe_redirect($location, $status = 302) {
 
 	// Added part: make the hardcoded WP cookie "secure" and "httponly".
@@ -104,5 +105,6 @@ function wp_safe_redirect($location, $status = 302) {
 	$location = wp_sanitize_redirect($location);
 	$location = wp_validate_redirect($location, admin_url());
 	wp_redirect($location, $status);
+}
 }
 
