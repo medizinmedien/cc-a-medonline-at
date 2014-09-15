@@ -1,5 +1,10 @@
 ### Änderungen für CC (Custom Code): a.medonline.at
 
+#### Version 0.5 // 15.09.2014
+
+* Theme Headway gibt nun HTTPS URLs aus, sofern benötigt.
+
+
 #### Version 0.4 // 11.09.2014
 
 * Einbetten von Fullstory & Groove.
