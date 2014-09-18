@@ -4,6 +4,7 @@
  * Description: Site-specific functionality for a.medonline.at like returning https links of wp-filebase-pro's CSS on https sites and redirecting page "/pneumo/" to https.
  * Author: Frank St&uuml;rzebecher
  * Version: 0.5
+ * Plugin URI: https://github.com/medizinmedien/cc-a-medonline-at
  * GitHub Plugin URI: https://github.com/medizinmedien/cc-a-medonline-at
  */
 
@@ -37,13 +38,20 @@ add_action( 'template_redirect', 'amed_redirect_pneumo');
  * Make the "Post Password Logout Button" appear in German.
  */
 function amed_translate_postpass_button() {
-	// The plugin should be installed.
+	global $post;
+
+// Protected post?
+if ( empty( $post->post_password) || ! in_the_loop() )
+	return;
+
+	// The plugin "Post Password Logout Button" should also be active.
 	if( function_exists( 'pplb_logout_filter' ) ) {
 		function amed_adjust_postpass_logout_button( $content ) {
 			return str_replace( 'value="logout">', 'value="Abmelden"><br/><br/>', $content );
 		}
 
 		// Interferes with other password protected posts (Logoff not working).
+		// Does nothing if logout button is not set to be inserted automatically, via settings page.
 		if ( $_SERVER['REQUEST_URI'] != '/pneumo/' ) {
 			remove_filter( 'the_content', 'pplb_logout_filter', 9999, 1 );
 		}
