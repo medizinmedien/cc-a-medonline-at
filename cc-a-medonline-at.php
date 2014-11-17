@@ -141,7 +141,7 @@ function cc_amed_add_groove() {
 	|| ( defined( 'XMLRPC_REQUEST') && XMLRPC_REQUEST )
 	|| ( defined( 'DOING_AUTOSAVE') && DOING_AUTOSAVE )
 	|| ( defined( 'DOING_AJAX' ) && DOING_AJAX)
-	|| is_page( array('impressum', 'kontakt') ))
+	|| is_page( array('impressum', 'kontakt', 'pneumo') ))
 		return;
 
 	$groove_include = WP_PLUGIN_DIR . '/Shared-Includes/inc/groove/groove-help-widget.php';
