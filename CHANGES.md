@@ -1,5 +1,10 @@
 ### Änderungen für CC (Custom Code): a.medonline.at
 
+#### Version 0.6 // 20.11.2014
+* Sicherheitsaspekte für Seite /novalgin/ angepasst, wie z.B. forcierte Anzeige via https, sicheres Cookie, Logout-Button.
+* Header: Einfügen der X-Frame-Options (deny) für die Seiten /pneumo/ und /novalgin/
+* Improvement: Übersetzung des Logout-Buttons funktionierte nur bei automatischem Einfügen, nicht aber bei manuellem Setzen des Buttons via Shortcode (dzt. aktuell via Einstellungen - wurde geändert).
+
 #### Version 0.5 // 15.09.2014
 
 * Theme Headway gibt nun HTTPS URLs aus, sofern benötigt.

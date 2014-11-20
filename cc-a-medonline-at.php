@@ -3,7 +3,7 @@
  * Plugin Name: Custom Code for a.medonline.at
  * Description: Site-specific functionality for a.medonline.at like returning https links of wp-filebase-pro's CSS on https sites and redirecting page "/pneumo/" to https.
  * Author: Frank St&uuml;rzebecher
- * Version: 0.5
+ * Version: 0.6
  * Plugin URI: https://github.com/medizinmedien/cc-a-medonline-at
  * GitHub Plugin URI: https://github.com/medizinmedien/cc-a-medonline-at
  */
@@ -26,7 +26,9 @@ add_filter( 'pre_option_wpfb_css', 'amed_return_https' );
  * Make sure that page "/pneumo/" is delivered by https.
  */
 function amed_redirect_pneumo() {
-	if( strpos( $_SERVER['REQUEST_URI'], '/pneumo' ) !== false && $_SERVER['SERVER_PORT'] == 80 ) {
+	if( ( strpos( $_SERVER['REQUEST_URI'], '/pneumo'   ) !== false   ||
+	      strpos( $_SERVER['REQUEST_URI'], '/novalgin' ) !== false )
+	      && $_SERVER['SERVER_PORT'] == 80 ) {
 		wp_redirect( 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
 		exit();
 	}
@@ -35,9 +37,10 @@ add_action( 'template_redirect', 'amed_redirect_pneumo');
 
 
 /**
- * Make the "Post Password Logout Button" appear in German.
+ * Make the "Post Password Logout Button" appear in German, when it is set to
+ * be inserted into posts automatically.
  */
-function amed_translate_postpass_button() {
+function amed_translate_automatic_postpass_logout_button() {
 	global $post;
 
 // Protected post?
@@ -45,14 +48,15 @@ if ( empty( $post->post_password) || ! in_the_loop() )
 	return;
 
 	// The plugin "Post Password Logout Button" should also be active.
+	// Does not work when buttons inserted via shortcodes (see extra filter below).
 	if( function_exists( 'pplb_logout_filter' ) ) {
 		function amed_adjust_postpass_logout_button( $content ) {
-			return str_replace( 'value="logout">', 'value="Abmelden"><br/><br/>', $content );
+			return str_replace( 'value="logout">', 'value="Abmelden"><br><br>', $content );
 		}
 
 		// Interferes with other password protected posts (Logoff not working).
 		// Does nothing if logout button is not set to be inserted automatically, via settings page.
-		if ( $_SERVER['REQUEST_URI'] != '/pneumo/' ) {
+		if ( $_SERVER['REQUEST_URI'] != '/pneumo/' && $_SERVER['REQUEST_URI'] != '/novalgin/' ) {
 			remove_filter( 'the_content', 'pplb_logout_filter', 9999, 1 );
 		}
 
@@ -60,7 +64,19 @@ if ( empty( $post->post_password) || ! in_the_loop() )
 		add_filter( 'the_content', 'amed_adjust_postpass_logout_button', 10000 );
 	}
 }
-add_action( 'template_redirect', 'amed_translate_postpass_button' );
+add_action( 'template_redirect', 'amed_translate_automatic_postpass_logout_button' );
+
+/**
+ * Make the "Post Password Logout Button" appear in German, when it is set to
+ * be inserted into posts by shortcode.
+ */
+function amed_translate_shortcoded_postpass_logout_button( $content ) {
+	if ( $_SERVER['REQUEST_URI'] != '/pneumo/' && $_SERVER['REQUEST_URI'] != '/novalgin/' )
+		return $content;
+	return str_replace( 'value="logout"', 'value="Abmelden"', $content );
+}
+// WP do_shortcode filter is applied with priority 11
+add_filter( 'the_content', 'amed_translate_shortcoded_postpass_logout_button', 12 );
 
 
 /**
@@ -116,6 +132,14 @@ function wp_safe_redirect($location, $status = 302) {
 }
 }
 
+/**
+ * Add X-Frame-Options directive to secure pages from being embedded.
+ */
+function cc_amed_add_xframeoptions() {
+	if ( ! is_admin() )
+		?><meta http-equiv="X-Frame-Options" content="deny" /><?php
+}
+add_action( 'wp_head', 'cc_amed_add_xframeoptions', 5 );
 
 /**
 * Load Fullstory from Shared Includes.
