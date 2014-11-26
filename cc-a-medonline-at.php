@@ -3,7 +3,7 @@
  * Plugin Name: Custom Code for a.medonline.at
  * Description: Site-specific functionality for a.medonline.at like returning https links of wp-filebase-pro's CSS on https sites and redirecting page "/pneumo/" to https.
  * Author: Frank St&uuml;rzebecher
- * Version: 0.6
+ * Version: 0.7
  * Plugin URI: https://github.com/medizinmedien/cc-a-medonline-at
  * GitHub Plugin URI: https://github.com/medizinmedien/cc-a-medonline-at
  */
@@ -174,8 +174,8 @@ function cc_amed_add_groove() {
 		include( $groove_include );
 
 }
-add_action( 'wp_footer',  'cc_amed_add_groove' );
-add_action( 'login_head', 'cc_amed_add_groove' );
+//add_action( 'wp_footer',  'cc_amed_add_groove' );
+//add_action( 'login_head', 'cc_amed_add_groove' );
 
 
 /**

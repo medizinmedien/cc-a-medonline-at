@@ -1,5 +1,9 @@
 ### Änderungen für CC (Custom Code): a.medonline.at
 
+#### Version 0.7 // 26.11.2014
+
+* Groove abgeschaltet (medizinmedien/allgemein/issues/149).
+
 #### Version 0.6 // 20.11.2014
 * Sicherheitsaspekte für Seite /novalgin/ angepasst, wie z.B. forcierte Anzeige via https, sicheres Cookie, Logout-Button.
 * Header: Einfügen der X-Frame-Options (deny) für die Seiten /pneumo/ und /novalgin/
