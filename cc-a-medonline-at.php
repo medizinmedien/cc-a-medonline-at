@@ -37,7 +37,7 @@ add_action( 'template_redirect', 'amed_redirect_pneumo');
 
 
 /**
- * Make the "Post Password Logout Button" appear in German, when it is set to
+ * Make the "Protected Posts Logout Button" appear in German, when it is set to
  * be inserted into posts automatically.
  */
 function amed_translate_automatic_postpass_logout_button() {
@@ -47,7 +47,7 @@ function amed_translate_automatic_postpass_logout_button() {
 	if ( empty( $post->post_password) || ! in_the_loop() )
 		return;
 
-	// The plugin "Post Password Logout Button" should also be active.
+	// The plugin "Protected Posts Logout Button" should also be active.
 	// Does not work when buttons inserted via shortcodes (see extra filter below).
 	if( function_exists( 'pplb_logout_filter' ) ) {
 		function amed_adjust_postpass_logout_button( $content ) {
@@ -67,7 +67,7 @@ function amed_translate_automatic_postpass_logout_button() {
 add_action( 'template_redirect', 'amed_translate_automatic_postpass_logout_button' );
 
 /**
- * Make the "Post Password Logout Button" appear in German, when it is set to
+ * Make the "Protected Posts Logout Button" appear in German, when it is set to
  * be inserted into posts by shortcode.
  */
 function amed_translate_shortcoded_postpass_logout_button( $content ) {
