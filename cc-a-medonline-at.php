@@ -43,9 +43,9 @@ add_action( 'template_redirect', 'amed_redirect_pneumo');
 function amed_translate_automatic_postpass_logout_button() {
 	global $post;
 
-// Protected post?
-if ( empty( $post->post_password) || ! in_the_loop() )
-	return;
+	// Protected post?
+	if ( empty( $post->post_password) || ! in_the_loop() )
+		return;
 
 	// The plugin "Post Password Logout Button" should also be active.
 	// Does not work when buttons inserted via shortcodes (see extra filter below).
@@ -80,7 +80,7 @@ add_filter( 'the_content', 'amed_translate_shortcoded_postpass_logout_button', 1
 
 
 /**
- * Avoid autocomplete in password fields of proteced posts.
+ * Avoid autocomplete in password fields of protected posts.
  */
 function amed_secure_postpass_form ( $form ) {
 
