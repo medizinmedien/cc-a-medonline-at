@@ -1,5 +1,10 @@
 ### Änderungen für CC (Custom Code): a.medonline.at
 
+#### Version 0.8 // 21.10.2015
+
+* Fullstory tracking removed
+* Stetic tracking added
+
 #### Version 0.7 // 26.11.2014
 
 * Groove abgeschaltet (medizinmedien/allgemein/issues/149).
